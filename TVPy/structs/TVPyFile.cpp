@@ -1,5 +1,7 @@
 #include "TVPyFile.hpp"
 #include "TvPyFileInfo.hpp"
+#include "TVPyClip.hpp"
+
 PyTVPaintFile::PyTVPaintFile(std::string path){
 	namespace fs = std::filesystem;
 
@@ -32,7 +34,7 @@ PyTVPaintFile::PyTVPaintFile(std::string path){
 	}
 
 	mmap = mio::ummap_source{ path };
-	tvp_file = std::make_unique<File>(mmap);
+	tvp_file = std::make_shared<File>(mmap);
 };
 
 PyTVPaintFile::~PyTVPaintFile() {
@@ -41,7 +43,7 @@ PyTVPaintFile::~PyTVPaintFile() {
 
 void PyTVPaintFile::deinit() {
 	mmap.unmap();
-	tvp_file = std::unique_ptr<File>(nullptr);
+	tvp_file.release();
 }
 
 PyFileInfo PyTVPaintFile::info() {

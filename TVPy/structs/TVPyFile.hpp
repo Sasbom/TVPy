@@ -1,8 +1,9 @@
 #pragma once
-#include "TVPy.hpp"
+#include "../TVPy.hpp"
 
-//declare PyFileInfo ahead of time.
+//declare things that need to be children of File object ahead of time.
 struct PyFileInfo;
+struct PyClip;
 
 // Provide an interface that keeps track of mmap source so we can add a context manager.
 struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
@@ -15,5 +16,6 @@ struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
 	PyFileInfo info();
 
 	void deinit();
-};
 
+	
+};

@@ -6,10 +6,12 @@
 set(MODULE_ENTRY
 	"TVPy.cpp"
 	"TVPy.hpp"
-	"TVPyFile.cpp"
-	"TVPyFile.hpp"
-	"TVPyFileInfo.cpp"
-	"TVPyFileInfo.hpp"
+	"structs/TVPyFile.cpp"
+	"structs/TVPyFile.hpp"
+	"structs/TVPyClip.cpp"
+	"structs/TVPyClip.hpp"
+	"structs/TVPyFileInfo.cpp"
+	"structs/TVPyFileInfo.hpp"
 )
 
 pybind11_add_module(${PYPROJECT_NAME} SHARED ${MODULE_ENTRY})
