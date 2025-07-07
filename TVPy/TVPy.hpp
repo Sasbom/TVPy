@@ -4,6 +4,10 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <filesystem>
 
 #define PYBIND11_CPP20
 #include <pybind11/pybind11.h>

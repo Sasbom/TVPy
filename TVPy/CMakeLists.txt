@@ -6,6 +6,8 @@
 set(MODULE_ENTRY
 	"TVPy.cpp"
 	"TVPy.hpp"
+	"TVPyFile.cpp"
+	"TVPyFile.hpp"
 )
 
 pybind11_add_module(${PYPROJECT_NAME} SHARED ${MODULE_ENTRY})
