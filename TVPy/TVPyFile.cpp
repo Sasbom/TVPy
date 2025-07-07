@@ -1,5 +1,5 @@
 #include "TVPyFile.hpp"
-
+#include "TvPyFileInfo.hpp"
 PyTVPaintFile::PyTVPaintFile(std::string path){
 	namespace fs = std::filesystem;
 
@@ -43,3 +43,7 @@ void PyTVPaintFile::deinit() {
 	mmap.unmap();
 	tvp_file = std::unique_ptr<File>(nullptr);
 }
+
+PyFileInfo PyTVPaintFile::info() {
+	return PyFileInfo(shared_from_this());
+};
