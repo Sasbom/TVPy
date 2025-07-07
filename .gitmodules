@@ -1,0 +1,4 @@
+[submodule "TVPP_PP"]
+	path = TVPP_PP
+	url = https://github.com/Sasbom/TVPP_PP.git
+	branch = feature/static_linkage

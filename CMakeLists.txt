@@ -28,3 +28,4 @@ find_package(pybind11 CONFIG REQUIRED)
 
 # Include sub-projects.
 add_subdirectory ("TVPy")
+add_subdirectory("TVPP_PP")

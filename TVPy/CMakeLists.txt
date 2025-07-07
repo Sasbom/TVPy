@@ -9,7 +9,9 @@ set(MODULE_ENTRY
 )
 
 pybind11_add_module(${PYPROJECT_NAME} SHARED ${MODULE_ENTRY})
-target_include_directories(${PYPROJECT_NAME} PUBLIC ${PYBIND11_INCLUDE})
+target_include_directories(${PYPROJECT_NAME} PUBLIC ${PYBIND11_INCLUDE} "${CMAKE_SOURCE_DIR}/TVPP_PP")
+
+target_link_libraries(${PYPROJECT_NAME} PRIVATE TVPP_PP)
 
 target_compile_features(${PYPROJECT_NAME} PUBLIC cxx_std_23)
 
