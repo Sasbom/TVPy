@@ -11,3 +11,4 @@ struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
 
 	void deinit();
 };
+

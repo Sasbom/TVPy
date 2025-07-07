@@ -8,6 +8,9 @@
 #include <string>
 #include <string_view>
 #include <filesystem>
+#include <vector>
+#include <exception>
+#include <format>
 
 #define PYBIND11_CPP20
 #include <pybind11/pybind11.h>
