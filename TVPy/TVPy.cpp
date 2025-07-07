@@ -1,10 +1,9 @@
-﻿// TVPy.cpp : Defines the entry point for the application.
-//
+﻿#include "TVPy.hpp"
+#include "structs/TVPyCommon.hpp"
 
-#include "TVPy.hpp"
-
-int main()
-{
-	std::cout << "Hello CMake." << std::endl;
-	return 0;
+PYBIND11_MODULE(TVPy, m) {
+    blendmode_enum(m);
+    repeat_enum(m);
+    register_tvpyfile(m);
 }
+

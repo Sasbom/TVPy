@@ -14,6 +14,7 @@ set(MODULE_ENTRY
 	"structs/TVPyLayer.hpp"
 	"structs/TVPyFileInfo.cpp"
 	"structs/TVPyFileInfo.hpp"
+	"structs/TVPyCommon.hpp"
 )
 
 pybind11_add_module(${PYPROJECT_NAME} SHARED ${MODULE_ENTRY})

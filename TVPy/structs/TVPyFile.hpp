@@ -8,6 +8,7 @@ struct PyClip;
 // Provide an interface that keeps track of mmap source so we can add a context manager.
 struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
 	PyTVPaintFile(std::string path);
+	PyTVPaintFile(py::object const& path);
 	~PyTVPaintFile();
 	
 	mio::ummap_source mmap;
@@ -17,5 +18,6 @@ struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
 
 	void deinit();
 
-	
 };
+
+void register_tvpyfile(py::module_& m);
