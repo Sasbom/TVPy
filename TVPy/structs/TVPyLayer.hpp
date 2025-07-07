@@ -41,6 +41,10 @@ struct PyLayer : public std::enable_shared_from_this<PyLayer> {
 
 	// output as numpy compatible image
 	cache_t& get_cache_at_frame(int long const& frame);
+	
+	py::object py_get_cache_at_frame(int long frame);
+	
+	
 	std::string repeat_t_to_str(repeat_t const& rep);
 	std::string blendmode_t_to_str(blendmode_t const& blend);
 private:

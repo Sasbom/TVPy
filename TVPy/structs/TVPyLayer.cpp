@@ -225,3 +225,23 @@ cache_t& PyLayer::get_cache_at_frame(int long const& frame) {
     EXPIRE_GUARD;
     return get_layer()->get_cache_at_frame(frame);
 };
+
+py::object PyLayer::py_get_cache_at_frame(int long frame) {
+    EXPIRE_GUARD;
+    auto& cache = get_cache_at_frame(frame);
+    if (!cache.has_value()) {
+        return py::none();
+    }
+
+    auto value = cache.value();
+    auto info = parent.lock().get()->tvp_file->file_info;
+    std::vector<py::ssize_t> shape = { static_cast<py::ssize_t>(info.height), static_cast<py::ssize_t>(info.width), 4 };
+    std::vector<py::ssize_t> strides = { static_cast<py::ssize_t>(info.width) * 4, 4, 1 };
+
+    return py::array_t<std::uint8_t>(
+        shape,
+        strides,
+        value.data(),
+        py::cast(value)
+    );
+};

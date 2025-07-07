@@ -16,6 +16,7 @@
 
 #define PYBIND11_CPP20
 #include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
 namespace py = pybind11;
 
 #include <tvp_pp/structs/File.hpp>
