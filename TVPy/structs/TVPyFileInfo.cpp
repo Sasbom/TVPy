@@ -2,10 +2,10 @@
 
 PyFileInfo::PyFileInfo(std::shared_ptr<PyTVPaintFile> tvp_file): parent(tvp_file) {};
 
-#define EXPIRE_GUARD \
-if (parent.expired()) {\
-throw std::exception("Parent TVPaint File object not valid anymore.");\
-}\
+#define EXPIRE_GUARD                                                        \
+if (parent.expired()) {                                                     \
+    throw py::value_error("Parent TVPaint File object not valid anymore."); \
+}
 
 #define INFO parent.lock()->tvp_file->file_info
 

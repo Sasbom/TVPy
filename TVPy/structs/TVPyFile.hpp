@@ -11,7 +11,7 @@ struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
 	~PyTVPaintFile();
 	
 	mio::ummap_source mmap;
-	std::unique_ptr<File> tvp_file;
+	std::shared_ptr<File> tvp_file;
 
 	PyFileInfo info();
 

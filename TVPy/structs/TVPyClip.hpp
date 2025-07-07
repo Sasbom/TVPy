@@ -19,4 +19,7 @@ struct PyClip: public std::enable_shared_from_this<PyClip> {
 	long int mark_out_pos();
 	bool hidden();
 	std::size_t color_idx();
+
+private:
+	Clip* get_clip();
 };

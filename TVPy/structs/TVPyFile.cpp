@@ -42,8 +42,12 @@ PyTVPaintFile::~PyTVPaintFile() {
 }
 
 void PyTVPaintFile::deinit() {
+	for (auto& c : tvp_file->clips) {
+		for (auto& l : c->layers) {
+			l->clear_layer_contents();
+		}
+	}
 	mmap.unmap();
-	tvp_file.release();
 }
 
 PyFileInfo PyTVPaintFile::info() {

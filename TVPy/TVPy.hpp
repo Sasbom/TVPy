@@ -11,6 +11,8 @@
 #include <vector>
 #include <exception>
 #include <format>
+#include <optional>
+#include <cstdint>
 
 #define PYBIND11_CPP20
 #include <pybind11/pybind11.h>

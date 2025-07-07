@@ -10,6 +10,8 @@ set(MODULE_ENTRY
 	"structs/TVPyFile.hpp"
 	"structs/TVPyClip.cpp"
 	"structs/TVPyClip.hpp"
+	"structs/TVPyLayer.cpp"
+	"structs/TVPyLayer.hpp"
 	"structs/TVPyFileInfo.cpp"
 	"structs/TVPyFileInfo.hpp"
 )
