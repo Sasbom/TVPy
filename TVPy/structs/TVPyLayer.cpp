@@ -271,7 +271,7 @@ void register_tvplayer(py::module_& m) {
         .def("get_frame",&PyLayer::py_get_cache_at_frame,"frame index"_a)
         .def("__getitem__",                    // operator[] support
             [](PyLayer& c, int long const& idx) {
-                c.py_get_cache_at_frame(idx);
+                return c.py_get_cache_at_frame(idx);
             }
         )
         .def("__enter__", [](PyLayer& l) {   // with ... as ... support
