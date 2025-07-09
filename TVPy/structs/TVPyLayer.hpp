@@ -36,8 +36,8 @@ struct PyLayer : public std::enable_shared_from_this<PyLayer> {
 
 	std::string format_info();
 
-	void cache_layer_contents();
-	void clear_layer_contents();
+	std::shared_ptr<PyLayer> cache_layer_contents();
+	std::shared_ptr<PyLayer> clear_layer_contents();
 
 	// output as numpy compatible image
 	cache_t& get_cache_at_frame(int long const& frame);

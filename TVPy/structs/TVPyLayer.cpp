@@ -211,13 +211,15 @@ invisible(), lighttable(), stencil(), locked(), position_locked(), preserve_tran
     return s;
 };
 
-void PyLayer::cache_layer_contents() {
+std::shared_ptr<PyLayer> PyLayer::cache_layer_contents() {
     EXPIRE_GUARD;
-    return get_layer()->cache_layer_contents();
+    get_layer()->cache_layer_contents();
+    return shared_from_this();
 };
-void PyLayer::clear_layer_contents() {
+std::shared_ptr<PyLayer> PyLayer::clear_layer_contents() {
     EXPIRE_GUARD;
-    return get_layer()->clear_layer_contents();
+    get_layer()->clear_layer_contents();
+    return shared_from_this();
 };
 
 // TODO REFACTOR: output as numpy compatible image
@@ -238,12 +240,9 @@ py::object PyLayer::py_get_cache_at_frame(int long frame) {
     std::vector<py::ssize_t> shape = { static_cast<py::ssize_t>(info.height), static_cast<py::ssize_t>(info.width), 4 };
     std::vector<py::ssize_t> strides = { static_cast<py::ssize_t>(info.width) * 4, 4, 1 };
 
-    return py::array_t<std::uint8_t>(
-        shape,
-        strides,
-        value.data(),
-        py::cast(value)
-    );
+    auto ar = py::array_t<std::uint8_t>(shape,strides);
+    memcpy(ar.mutable_data(), value.data(), value.size());
+    return ar;
 };
 
 void register_tvplayer(py::module_& m) {
@@ -274,5 +273,13 @@ void register_tvplayer(py::module_& m) {
             [](PyLayer& c, int long const& idx) {
                 c.py_get_cache_at_frame(idx);
             }
-        );
+        )
+        .def("__enter__", [](PyLayer& l) {   // with ... as ... support
+            l.cache_layer_contents();
+            return l.shared_from_this();
+        })
+        .def("__exit__", [](PyLayer& l, py::args args) {
+            l.clear_layer_contents();
+            return py::none();
+        });
 }

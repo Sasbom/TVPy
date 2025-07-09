@@ -87,5 +87,22 @@ void register_tvpyfile(py::module_& m) {
 			}, py::return_value_policy::reference_internal), EMPTY_FUNC)
 		.def("__repr__", [](PyTVPaintFile& f) {
 		return std::format("<TvpFile sourced from: {}>", f.source); }
-		);
+		)
+		.def("__getitem__", [](PyTVPaintFile& f, std::size_t index) {
+		f.getfileclips();
+		if (index >= 0 && index < f.clips.size())
+			return f.clips[index];
+		else
+			throw py::index_error("Clip index out of range"); }
+		)
+		.def("close", [](PyTVPaintFile& f) {
+			f.deinit();
+		})
+		.def("__enter__", [](PyTVPaintFile& f) {
+			return f.shared_from_this();
+		})
+		.def("__exit__", [](PyTVPaintFile& f, py::args args) {
+			f.deinit();
+			return py::none();
+		});
 };

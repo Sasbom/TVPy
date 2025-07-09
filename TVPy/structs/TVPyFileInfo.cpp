@@ -247,5 +247,5 @@ void register_tvpfileinfo(py::module_& m) {
 		.def("__str__",&PyFileInfo::format_info)
 		.def("__repr__", [](PyFileInfo& f) {
 		return std::format("<TvpFileInfo {}>", f.uid()); }
-		);;
+		);
 };
