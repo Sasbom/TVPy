@@ -36,8 +36,8 @@ static inline void init_file(PyTVPaintFile& file, std::string& path) {
 	file.mmap = mio::ummap_source{ path };
 	file.source = path;
 	file.tvp_file = std::make_shared<File>(file.mmap);
-
-	for (std::size_t i{}; i < file.tvp_file->clips.size(); i++) {
+	auto clips_amt = file.tvp_file->clips.size();
+	for (std::size_t i{}; i < clips_amt; i++) {
 		file.clips.push_back(std::make_shared<PyClip>(file.shared_from_this(), i));
 	}
 }

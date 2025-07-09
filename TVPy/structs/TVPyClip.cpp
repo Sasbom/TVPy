@@ -100,7 +100,7 @@ Color Index: {}
 
 
 void register_tvpclip(py::module_& m) {
-	py::class_<PyClip>(m, "TvpClip")
+	py::class_<PyClip, std::shared_ptr<PyClip>>(m, "TvpClip")
 		.def_property("name", &PyClip::name, EMPTY_FUNC)
 		.def_property("dialog", &PyClip::dialog, EMPTY_FUNC)
 		.def_property("action", &PyClip::action, EMPTY_FUNC)
