@@ -263,5 +263,16 @@ void register_tvplayer(py::module_& m) {
         .def_property("stencil", &PyLayer::stencil, EMPTY_FUNC)
         .def_property("locked", &PyLayer::locked, EMPTY_FUNC)
         .def_property("position_locked", &PyLayer::position_locked, EMPTY_FUNC)
-        .def_property("preserve_trans", &PyLayer::preserve_trans, EMPTY_FUNC);
+        .def_property("preserve_trans", &PyLayer::preserve_trans, EMPTY_FUNC)
+        .def("__str__",&PyLayer::format_info)
+        .def("__repr__", [](PyLayer& l) {
+        return std::format("<TvpLayer '\"{}\" containing {} frames>", l.name(), l.frames_amount()); })
+        .def("cache_layer",&PyLayer::cache_layer_contents)
+        .def("release_layer",&PyLayer::clear_layer_contents)
+        .def("get_frame",&PyLayer::py_get_cache_at_frame,"frame index"_a)
+        .def("__getitem__",                    // operator[] support
+            [](PyLayer& c, int long const& idx) {
+                c.py_get_cache_at_frame(idx);
+            }
+        );
 }

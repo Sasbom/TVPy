@@ -6,5 +6,7 @@ PYBIND11_MODULE(TVPy, m) {
     register_repeat_enum(m);
     register_tvpyfile(m);
     register_tvpfileinfo(m);
+    register_tvpclip(m);
+    register_tvplayer(m);
 }
 

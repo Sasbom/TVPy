@@ -244,5 +244,8 @@ void register_tvpfileinfo(py::module_& m) {
 		.def_property("save_history", &PyFileInfo::save_history, EMPTY_FUNC)
 		.def_property("user_workduration", &PyFileInfo::user_workduration, EMPTY_FUNC)
 		.def_property("user_workchange", &PyFileInfo::user_workchange, EMPTY_FUNC)
-		.def("__repr__",&PyFileInfo::format_info);
+		.def("__str__",&PyFileInfo::format_info)
+		.def("__repr__", [](PyFileInfo& f) {
+		return std::format("<TvpFileInfo {}>", f.uid()); }
+		);;
 };

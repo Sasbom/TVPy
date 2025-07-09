@@ -1,4 +1,5 @@
 #include "TVPyClip.hpp"
+#include "TVPyLayer.hpp"
 #include <tvp_pp/structs/Clip.hpp>
 
 #define EXPIRE_GUARD                                                        \
@@ -6,7 +7,9 @@ if (parent.expired()) {                                                     \
     throw py::value_error("Parent TVPaint File object not valid anymore."); \
 }
 
-PyClip::PyClip(std::shared_ptr<PyTVPaintFile> tvp_file, std::size_t index): parent(tvp_file), clip_idx(index) {};
+PyClip::PyClip(std::shared_ptr<PyTVPaintFile> tvp_file, std::size_t index): parent(tvp_file), clip_idx(index) {
+	this->init_layers();
+};
 
 Clip* PyClip::get_clip() {
 	auto tvp_file = parent.lock()->tvp_file;
@@ -18,6 +21,15 @@ Clip* PyClip::get_clip() {
 		throw py::index_error("Clip is inaccessible / out of bounds."); 
 	}
 	return clip;
+}
+
+std::vector<std::shared_ptr<PyLayer>> PyClip::init_layers() {
+	EXPIRE_GUARD;
+	auto list = std::vector<std::shared_ptr<PyLayer>>();
+	for (std::size_t i{}; i < get_clip()->layers.size(); i++) {
+		list.push_back(std::make_shared<PyLayer>(parent.lock(), clip_idx, i));
+	}
+	return list;
 }
 
 std::string PyClip::name() {
@@ -99,5 +111,17 @@ void register_tvpclip(py::module_& m) {
 		.def_property("mark_out_pos", &PyClip::mark_out_pos, EMPTY_FUNC)
 		.def_property("hidden", &PyClip::hidden, EMPTY_FUNC)
 		.def_property("color_idx", &PyClip::color_idx, EMPTY_FUNC)
-		.def("__repr__",&PyClip::format_info);
+		.def("layers", [](PyClip& c) {return c.layers; }, py::return_value_policy::reference_internal)
+		.def("__getitem__",                    // operator[] support
+			[](PyClip& c, int const& idx) {
+				if (idx >= 0 && idx < c.layers.size()) 
+					return c.layers; 
+				else 
+					throw py::index_error("Requested layer out of range."); 
+			}, 
+			py::return_value_policy::reference_internal)
+		.def("__str__", &PyClip::format_info)
+		.def("__repr__", [](PyClip& c) {
+		return std::format("<TvpClip '\"{}\" containing {} layers>", c.name(), c.layers.size()); }
+		);
 }

@@ -1,6 +1,9 @@
 #pragma once
 #include "../TVPy.hpp"
 #include "TVPyFile.hpp"
+
+struct PyLayer;
+
 // Clip wrapper
 
 struct PyClip: public std::enable_shared_from_this<PyClip> {
@@ -21,6 +24,9 @@ struct PyClip: public std::enable_shared_from_this<PyClip> {
 	std::size_t color_idx();
 
 	std::string format_info();
+
+	std::vector<std::shared_ptr<PyLayer>> init_layers();
+	std::vector<std::shared_ptr<PyLayer>> layers;
 
 private:
 	Clip* get_clip();
