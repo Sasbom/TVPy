@@ -51,3 +51,4 @@ private:
 	Layer * get_layer();
 };
 
+void register_tvplayer(py::module_& m);

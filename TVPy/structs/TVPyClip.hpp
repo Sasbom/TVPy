@@ -20,6 +20,10 @@ struct PyClip: public std::enable_shared_from_this<PyClip> {
 	bool hidden();
 	std::size_t color_idx();
 
+	std::string format_info();
+
 private:
 	Clip* get_clip();
 };
+
+void register_tvpclip(py::module_& m);

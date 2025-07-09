@@ -61,3 +61,43 @@ std::size_t PyClip::color_idx() {
 	EXPIRE_GUARD;
 	return get_clip()->color_idx;
 };
+
+std::string PyClip::format_info() {
+	auto s = std::format(R"(Clip:
+Name: {}
+Dialog: {}
+Action: {}
+Note: {}
+Dialog Size : {}
+Action Size: {}
+Note Size: {}
+Mark In: {}
+Mark In Position: {}
+Mark Out: {}
+Mark Out Position: {}
+Hidden: {} 
+Color Index: {}
+)",
+	get_clip()->name, get_clip()->dialog, get_clip()->action, get_clip()->note,
+	get_clip()->dialog_size, get_clip()->action_size, get_clip()->note_size,
+	get_clip()->mark_in, get_clip()->mark_in_pos, get_clip()->mark_out, get_clip()->mark_out_pos,
+	get_clip()->hidden, get_clip()->color_idx
+	);
+	return s;
+}
+
+
+void register_tvpclip(py::module_& m) {
+	py::class_<PyFileInfo>(m, "TvpClip")
+		.def_property("name", &PyClip::name, EMPTY_FUNC)
+		.def_property("dialog", &PyClip::dialog, EMPTY_FUNC)
+		.def_property("action", &PyClip::action, EMPTY_FUNC)
+		.def_property("note", &PyClip::note, EMPTY_FUNC)
+		.def_property("mark_in", &PyClip::mark_in, EMPTY_FUNC)
+		.def_property("mark_in_pos", &PyClip::mark_in_pos, EMPTY_FUNC)
+		.def_property("mark_out", &PyClip::mark_out, EMPTY_FUNC)
+		.def_property("mark_out_pos", &PyClip::mark_out_pos, EMPTY_FUNC)
+		.def_property("hidden", &PyClip::hidden, EMPTY_FUNC)
+		.def_property("color_idx", &PyClip::color_idx, EMPTY_FUNC)
+		.def("__repr__",&PyClip::format_info);
+}

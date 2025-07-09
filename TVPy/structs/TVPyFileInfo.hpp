@@ -48,3 +48,5 @@ struct PyFileInfo {
 
 	std::string format_info();
 };
+
+void register_tvpfileinfo(py::module_& m);

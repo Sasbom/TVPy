@@ -245,3 +245,23 @@ py::object PyLayer::py_get_cache_at_frame(int long frame) {
         py::cast(value)
     );
 };
+
+void register_tvplayer(py::module_& m) {
+    py::class_<PyLayer, std::shared_ptr<PyLayer>>(m, "TvpLayer")
+        .def_property("name", &PyLayer::name, EMPTY_FUNC)
+        .def_property("name_ascii", &PyLayer::name_ascii, EMPTY_FUNC)
+        .def_property("first_frame_num", &PyLayer::first_frame_num, EMPTY_FUNC)
+        .def_property("frame_offset", &PyLayer::frame_offset, EMPTY_FUNC)
+        .def_property("frames_amount", &PyLayer::frames_amount, EMPTY_FUNC)
+        .def_property("blend_mode", &PyLayer::blend_mode, EMPTY_FUNC)
+        .def_property("repeat_in_type", &PyLayer::repeat_in_type, EMPTY_FUNC)
+        .def_property("repeat_out_type", &PyLayer::repeat_out_type, EMPTY_FUNC)
+        .def_property("group_id", &PyLayer::group_id, EMPTY_FUNC)
+        .def_property("opacity", &PyLayer::opacity, EMPTY_FUNC)
+        .def_property("invisible", &PyLayer::invisible, EMPTY_FUNC)
+        .def_property("lighttable", &PyLayer::lighttable, EMPTY_FUNC)
+        .def_property("stencil", &PyLayer::stencil, EMPTY_FUNC)
+        .def_property("locked", &PyLayer::locked, EMPTY_FUNC)
+        .def_property("position_locked", &PyLayer::position_locked, EMPTY_FUNC)
+        .def_property("preserve_trans", &PyLayer::preserve_trans, EMPTY_FUNC);
+}

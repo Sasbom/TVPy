@@ -2,7 +2,7 @@
 #include "TvPyFileInfo.hpp"
 #include "TVPyClip.hpp"
 
-#define EMPTY_FUNC [](){}
+
 
 PyTVPaintFile::PyTVPaintFile(std::string path){
 	namespace fs = std::filesystem;

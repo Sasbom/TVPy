@@ -24,9 +24,11 @@ namespace py = pybind11;
 #include <tvp_pp/structs/File.hpp>
 #include <mio/single_include/mio/mio.hpp>
 
+#define EMPTY_FUNC [](){}
+
 // enum helpers
 
-inline void blendmode_enum(py::module_& m) {
+inline void register_blendmode_enum(py::module_& m) {
 #ifdef DIFFERENCE // on msvc, difference is a macro in winuser.
 #define RESTORE_DIFFERENCE
 #undef DIFFERENCE
@@ -67,7 +69,7 @@ inline void blendmode_enum(py::module_& m) {
 #endif
 }
 
-inline void repeat_enum(py::module_& m) {
+inline void register_repeat_enum(py::module_& m) {
     py::enum_<repeat_t>(m, "RepeatMode")
         .value("NONE", repeat_t::NONE)
         .value("REPEAT", repeat_t::REPEAT)
