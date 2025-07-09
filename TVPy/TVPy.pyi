@@ -433,7 +433,7 @@ class TvpLayer:
         """Get buffer at specified frame as a uint8 numpy ndarray."""
         ...
 
-    def __enter__(self) -> "TvpFile":
+    def __enter__(self) -> "TvpLayer":
         """On with statement, cache layer contents."""
         ...
 
