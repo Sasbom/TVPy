@@ -2,7 +2,18 @@
 #include "TvPyFileInfo.hpp"
 #include "TVPyClip.hpp"
 
-static inline void init_file(PyTVPaintFile& file, std::string& path) {
+PyTVPaintFile::PyTVPaintFile(py::object const& path) {
+	// Import pathlib and get the Path class
+	py::module pathlib = py::module::import("pathlib");
+	py::object Path = pathlib.attr("Path");
+
+	if (!py::isinstance(path, Path) && !py::isinstance(path,py::str())) {
+		throw std::invalid_argument("Expected a pathlib.Path or str.");
+	} 
+
+	// Call str() on the object
+	auto strpath = py::str(path).operator std::string();
+
 	namespace fs = std::filesystem;
 
 #ifdef WIN32
@@ -20,10 +31,10 @@ static inline void init_file(PyTVPaintFile& file, std::string& path) {
 		return newpath;
 		};
 
-	path = strpath_normalize(path);
+	strpath = strpath_normalize(strpath);
 #endif
-	auto filepath = fs::path(path);
-	if (!fs::exists(path)) {
+	auto filepath = fs::path(strpath);
+	if (!fs::exists(strpath)) {
 		throw py::value_error("Given path does not exist.");
 	}
 	if (!fs::is_regular_file(filepath)) {
@@ -33,32 +44,20 @@ static inline void init_file(PyTVPaintFile& file, std::string& path) {
 		throw py::value_error("Given path needs to point to a '*.tvpp' file.");
 	}
 
-	file.mmap = mio::ummap_source{ path };
-	file.source = path;
-	file.tvp_file = std::make_shared<File>(file.mmap);
-	auto clips_amt = file.tvp_file->clips.size();
-	for (std::size_t i{}; i < clips_amt; i++) {
-		file.clips.push_back(std::make_shared<PyClip>(file.shared_from_this(), i));
-	}
+	mmap = mio::ummap_source{ strpath };
+	source = strpath;
+	tvp_file = std::make_shared<File>(mmap);
 }
 
-PyTVPaintFile::PyTVPaintFile(std::string path){
-	init_file(*this, path);
-};
+void PyTVPaintFile::getfileclips() {
+	if (init_clips)
+		return;
 
-PyTVPaintFile::PyTVPaintFile(py::object const& path) {
-	// Import pathlib and get the Path class
-	py::module pathlib = py::module::import("pathlib");
-	py::object Path = pathlib.attr("Path");
-
-	if (!py::isinstance(path, Path)) {
-		throw std::invalid_argument("Expected a pathlib.Path object");
+	auto clips_amt = tvp_file->clips.size();
+	for (std::size_t i{}; i < clips_amt; i++) {
+		clips.push_back(std::make_shared<PyClip>(shared_from_this(), i));
 	}
-
-	// Call str() on the object
-	auto strpath = py::str(path).operator std::string();
-
-	init_file(*this, strpath);
+	init_clips = true;
 }
 
 PyTVPaintFile::~PyTVPaintFile() {
@@ -80,9 +79,12 @@ PyFileInfo PyTVPaintFile::info() {
 
 void register_tvpyfile(py::module_& m) {
 	py::class_<PyTVPaintFile, std::shared_ptr<PyTVPaintFile>>(m, "TvpFile")
-		.def(py::init<py::str>(), "path"_a)
 		.def(py::init<py::object>(), "path"_a)
 		.def_property("info", &PyTVPaintFile::info, EMPTY_FUNC)
+		.def_property("clips", py::cpp_function([](PyTVPaintFile& f) {
+		f.getfileclips();
+		return f.clips;
+			}, py::return_value_policy::reference_internal), EMPTY_FUNC)
 		.def("__repr__", [](PyTVPaintFile& f) {
 		return std::format("<TvpFile sourced from: {}>", f.source); }
 		);

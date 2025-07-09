@@ -10,11 +10,13 @@ struct PyTVPaintFile : public std::enable_shared_from_this<PyTVPaintFile> {
 	PyTVPaintFile(std::string path);
 	PyTVPaintFile(py::object const& path);
 	~PyTVPaintFile();
-	
+
 	std::string source{};
 	mio::ummap_source mmap;
 	std::shared_ptr<File> tvp_file;
 
+	bool init_clips{false};
+	void getfileclips();
 	std::vector<std::shared_ptr<PyClip>> clips{};
 
 	PyFileInfo info();

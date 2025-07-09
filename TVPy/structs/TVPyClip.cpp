@@ -8,7 +8,7 @@ if (parent.expired()) {                                                     \
 }
 
 PyClip::PyClip(std::shared_ptr<PyTVPaintFile> tvp_file, std::size_t index): parent(tvp_file), clip_idx(index) {
-	this->init_layers();
+	layers = this->init_layers();
 };
 
 Clip* PyClip::get_clip() {
@@ -111,17 +111,17 @@ void register_tvpclip(py::module_& m) {
 		.def_property("mark_out_pos", &PyClip::mark_out_pos, EMPTY_FUNC)
 		.def_property("hidden", &PyClip::hidden, EMPTY_FUNC)
 		.def_property("color_idx", &PyClip::color_idx, EMPTY_FUNC)
-		.def("layers", [](PyClip& c) {return c.layers; }, py::return_value_policy::reference_internal)
+		.def_property("layers", py::cpp_function([](PyClip& c) {return c.layers; }, py::return_value_policy::reference_internal),EMPTY_FUNC)
 		.def("__getitem__",                    // operator[] support
 			[](PyClip& c, int const& idx) {
 				if (idx >= 0 && idx < c.layers.size()) 
-					return c.layers; 
+					return c.layers[idx]; 
 				else 
 					throw py::index_error("Requested layer out of range."); 
 			}, 
 			py::return_value_policy::reference_internal)
 		.def("__str__", &PyClip::format_info)
 		.def("__repr__", [](PyClip& c) {
-		return std::format("<TvpClip '\"{}\" containing {} layers>", c.name(), c.layers.size()); }
+		return std::format("<TvpClip \"{}\" containing {} layers>", c.name(), c.layers.size()); }
 		);
 }
