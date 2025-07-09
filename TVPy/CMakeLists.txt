@@ -24,4 +24,11 @@ target_link_libraries(${PYPROJECT_NAME} PRIVATE TVPP_PP)
 
 target_compile_features(${PYPROJECT_NAME} PUBLIC cxx_std_23)
 
-# TODO: Add tests and install targets if needed.
+# Copy TVPy.pyi to the build directory
+add_custom_command(
+    TARGET ${PYPROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/TVPy/TVPy.pyi"
+        "$<TARGET_FILE_DIR:${PYPROJECT_NAME}>/TVPy.pyi"
+    COMMENT "Copying Pyhon Interface File TVPy.pyi to module output directory"
+)
