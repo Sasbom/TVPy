@@ -38,7 +38,7 @@ else
     echo "Pybind11 module found!"
 fi
 
-python3 ./py_buildutils/minimum_version.py 3.10
+python3 ./py_buildutils/minimum_version.py 3.7
 exit_code=$?
 if [ "$exit_code" -eq 1 ]; then
     echo 'Unexpected error occurred while checking python version.'

@@ -52,7 +52,7 @@ if ($LASTEXITCODE -eq 1){
     Write-Output("Pybind11 module found!")
 }
 
-& python ./py_buildutils/minimum_version.py 3.10
+& python ./py_buildutils/minimum_version.py 3.7
 if ($LASTEXITCODE -eq 1){
     Write-Output('Unexpected error occured while checking python version.')
     exit 1
