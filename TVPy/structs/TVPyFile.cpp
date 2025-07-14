@@ -7,7 +7,7 @@ PyTVPaintFile::PyTVPaintFile(py::object const& path) {
 	py::module pathlib = py::module::import("pathlib");
 	py::object Path = pathlib.attr("Path");
 
-	if (!py::isinstance(path, Path) && !py::isinstance(path,py::str())) {
+	if (!py::isinstance(path, Path) && !py::isinstance<py::str>(path)) {
 		throw std::invalid_argument("Expected a pathlib.Path or str.");
 	} 
 
