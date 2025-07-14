@@ -69,4 +69,4 @@ $Env:FOUND_PYBIND11_CMAKE_PATH = & python ./py_buildutils/pybind11folder_cmake.p
 Write-Output("Found pybind11 cmake at: " + $Env:FOUND_PYBIND11_CMAKE_PATH)
 
 cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release
-cmake --build ./build 
+cmake --build ./build --config Release

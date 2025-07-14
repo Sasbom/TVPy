@@ -26,3 +26,5 @@ find_package(pybind11 CONFIG REQUIRED)
 # Include sub-projects.
 add_subdirectory ("TVPy")
 add_subdirectory("TVPP_PP")
+
+message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")

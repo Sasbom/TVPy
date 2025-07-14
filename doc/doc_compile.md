@@ -10,7 +10,7 @@ When cloning, use `git clone https://github.com/Sasbom/TVPy.git --recurse-submod
 #### Toolchain compatibility
 TVPy is compatible with the following toolchains:
 
-- Visual Studio 2022's compiler, MSVC v143, cxx compiler version 1.42 or above
+- Visual Studio 2022's compiler, MSVC v143, cxx compiler version 19.44 or above
 - GCC 14 and up.
 - LLVM Clang linked with either libgc++ or the msvc libraries.
 
@@ -41,4 +41,5 @@ The scripts are configured to use your configured `python.exe` (win) / `python3`
 and pybind11's cmake extensions further make things convenient.
 
 Build files are located in `build/TVPy/Release`, with the TVPy.pyi file present for annotation.
-A ready made module is available in `build/module/TVPy`, ready to be put in your python environment.
+A ready made module is available in `build/tvpy_module-[python version]/TVPy`, ready to be put in your python environment.
+<br>CMake will also report on this: `[CMake] -- Constructing python module in: C:/Users/Astudio/source/repos/TVPy/build/tvpy_module-3.11.9/TVPy ...`
