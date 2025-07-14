@@ -5,7 +5,7 @@ written by Sas van Gulik @ Studio Submarine.
 When cloning this project, don't forget to: <br>
 `git clone https://github.com/Sasbom/TVPy.git --recurse-submodules`
 
-Documentation 
+Documentation:
 - Basic Use: [Basic use Docs](./doc/doc_main.md)
 - Compilation: [Compilation Docs](./doc/doc_compile.md)
 
