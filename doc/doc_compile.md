@@ -40,20 +40,5 @@ Run `sh bash_build_pybind11.sh`
 The scripts are configured to use your configured `python.exe` (win) / `python3` (Linux) to figure out where everything is,
 and pybind11's cmake extensions further make things convenient.
 
-Build files are located in `build/TVPy/Debug`, with the TVPy.pyi file present for annotation.
-
-You can further refine this by making a module by putting the pyd/so, the pyi and an `__init__.py` in a folder of the same name.
-
-```
-TVPy:
-  - __init__.py
-  - TVPy.pyi
-  - TVPy.cp[3.x]-[os_platform].[so/pyd]
-```
-with the `__init__.py` file containing
-
-```py
-"""TVPy python module by Sas van Gulik @ Studio Submarine"""
-
-from TVPy.TVPy import *  # noqa: F403
-```
+Build files are located in `build/TVPy/Release`, with the TVPy.pyi file present for annotation.
+A ready made module is available in `build/module/TVPy`, ready to be put in your python environment.

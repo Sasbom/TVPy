@@ -30,5 +30,27 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${CMAKE_SOURCE_DIR}/TVPy/TVPy.pyi"
         "$<TARGET_FILE_DIR:${PYPROJECT_NAME}>/TVPy.pyi"
-    COMMENT "Copying Pyhon Interface File TVPy.pyi to module output directory"
+    COMMENT "Copying Pyhon Interface File TVPy.pyi to module output directory\n"
+)
+
+# Construct module.
+add_custom_command(
+    TARGET ${PYPROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/TVPy/TVPy.pyi"
+        "$<TARGET_FILE_DIR:${PYPROJECT_NAME}>/../../module/TVPy.pyi"
+    COMMENT "Constructing python module in build/module/TVPy\n"
+)
+add_custom_command(
+    TARGET ${PYPROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE:${PYPROJECT_NAME}>"
+        "$<TARGET_FILE_DIR:${PYPROJECT_NAME}>/../../module/$<TARGET_FILE_NAME:${PYPROJECT_NAME}>"
+)
+add_custom_command(
+    TARGET ${PYPROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/TVPy/__init__.py"
+        "$<TARGET_FILE_DIR:${PYPROJECT_NAME}>/../../module/__init__.py"
+    COMMENT "Finishing building module.\n"
 )

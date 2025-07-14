@@ -61,5 +61,5 @@ export FOUND_PYBIND11_PATH
 export FOUND_PYBIND11_CMAKE_PATH
 
 # Run CMake
-cmake -S . -B ./build
+cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release
 cmake --build ./build
