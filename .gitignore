@@ -44,3 +44,4 @@ out
 .vs
 build
 .python-version
+CMakePresets.json
