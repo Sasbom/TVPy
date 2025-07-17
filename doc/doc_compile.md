@@ -38,9 +38,25 @@ Bash:
 Run `bash bash_build_pybind11.sh` <br>
 or if you are like me and alias everything in your .bashrc, `bash -i bash_build_pybind11.sh`
 
+If you want to run a specific version of gcc you built yourself, say gcc 15, on Linux, add this before `# Run Cmake`
+```
+export CC=/path/to/gcc15/bin/gcc
+export CXX=/path/to/gcc15/bin/g++
+```
+
+If you are on Linux and want to use Ninja (`sudo apt install ninja-build`) as your build system,<br>add: `-G Ninja` to the before last line in `bash_build_pybind11.sh`, like so:
+```
+cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -G Ninja
+cmake --build ./build
+```
+
+
 The scripts are configured to use your configured `python.exe` (win) / `python3` (Linux) to figure out where everything is,
 and pybind11's cmake extensions further make things convenient.
 
-Build files are located in `build/TVPy/Release`, with the TVPy.pyi file present for annotation.<br>
+Therefore, compiling for different versions of python is a breeze once you got things going, with pyenv especially.
+<br>Make sure pybind11 is installed, and you are good to go.
+
+Build files are located in `build/TVPy/Release` (win), `build/TVpy` (linux), with the TVPy.pyi file present for annotation.<br>
 A ready made module is available in `build/tvpy_module-[python version]/TVPy`, ready to be put in your python environment.
 <br>CMake will also report on this:<br>`[CMake] -- Constructing python module in: C:/Users/Astudio/source/repos/TVPy/build/tvpy_module-3.11.9/TVPy ...`
