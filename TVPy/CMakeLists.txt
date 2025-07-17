@@ -24,6 +24,10 @@ target_link_libraries(${PYPROJECT_NAME} PRIVATE TVPP_PP)
 
 target_compile_features(${PYPROJECT_NAME} PUBLIC cxx_std_23)
 
+if(LINUX)
+    target_compile_options(TVPP_PP PRIVATE -fPIC)
+endif()
+
 # Copy TVPy.pyi to the build directory
 add_custom_command(
     TARGET ${PYPROJECT_NAME} POST_BUILD

@@ -1,5 +1,5 @@
 #include "TVPyFile.hpp"
-#include "TvPyFileInfo.hpp"
+#include "TVPyFileInfo.hpp"
 #include "TVPyClip.hpp"
 
 PyTVPaintFile::PyTVPaintFile(py::object const& path) {

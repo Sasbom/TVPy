@@ -35,7 +35,8 @@ Run `./pwsh_build_pybind11.ps1`
 
 Bash:
 
-Run `sh bash_build_pybind11.sh`
+Run `bash bash_build_pybind11.sh` <br>
+or if you are like me and alias everything in your .bashrc, `bash -i bash_build_pybind11.sh`
 
 The scripts are configured to use your configured `python.exe` (win) / `python3` (Linux) to figure out where everything is,
 and pybind11's cmake extensions further make things convenient.
