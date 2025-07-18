@@ -15,6 +15,10 @@ set(PYPROJECT_NAME "TVPy")
 set(ENV_PYTHON_PATH $ENV{FOUND_PYTHON_PATH})
 set(PYBIND11_INCLUDE $ENV{FOUND_PYBIND11_PATH})
 set(pybind11_DIR $ENV{FOUND_PYBIND11_CMAKE_PATH})
+set(BUNDLE_LIBCPP "False")
+if (LINUX)
+  set(BUNDLE_LIBCPP $ENV{BUNDLE_LIB})
+endif()
 
 # Tell CMake to search for Python here first 
 set(Python3_ROOT_DIR "${ENV_PYTHON_PATH}" CACHE PATH "Path to Python3 install")

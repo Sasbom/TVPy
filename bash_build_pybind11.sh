@@ -22,6 +22,18 @@ try_command() {
 # Flag to control output
 WRITE_OUTPUT=true
 
+BUNDLE=false
+
+# Loop through all arguments
+for arg in "$@"; do
+    if ["$arg" = "--bundle"]; then
+        BUNDLE=true
+    fi
+    if ["$arg" = "-b"]; then
+        BUNDLE=true
+    fi
+done
+
 if ! try_command python3; then
     echo 'Warning: Command "python3" was not found, exiting...'
     exit 1
@@ -59,6 +71,14 @@ echo "Found pybind11 cmake at: $FOUND_PYBIND11_CMAKE_PATH"
 export FOUND_PYTHON_PATH
 export FOUND_PYBIND11_PATH
 export FOUND_PYBIND11_CMAKE_PATH
+
+BUNDLE_LIB="False"
+if ["$BUNDLE"= true]; then
+  echo "Bundling libstdc++..."
+  BUNDLE_LIB="True"
+fi
+
+export BUNDLE_LIB
 
 # Run CMake
 cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release
