@@ -37,6 +37,7 @@ Make sure that your VC Runtimes are updated as this library requires vcruntime14
 
 Bash:
 
+Assuming your /lib/(platform)/libstc++.so.6 is up to date,<br>
 Run `bash bash_build_pybind11.sh` <br>
 or if you are like me and alias everything in your .bashrc, `bash -i bash_build_pybind11.sh`
 
@@ -46,8 +47,10 @@ export CC=/path/to/gcc15/bin/gcc
 export CXX=/path/to/gcc15/bin/g++
 ```
 
-Make sure you have your LD_LIBRARY_PATH including the right libraries, so that Python will know where to look for
-libstc++. My builds on GCC 15 rely on `GLIBCXX_3.4.32`, which was introduced with `GCC 12.1`.
+Make sure you have your LD_LIBRARY_PATH / lib folder including the right core libraries, so that Python will know where to look for
+libstdc++. My builds on GCC 15 rely on `GLIBCXX_3.4.32`, which was introduced with `GCC 12.1`.
+
+A working version of libstdc++ can be bundled by using `bash bash_build_pybind11.sh --bundle`
 
 If you are on Linux and want to use Ninja (`sudo apt install ninja-build`) as your build system,<br>add: `-G Ninja` to the before last line in `bash_build_pybind11.sh`, like so:
 ```
