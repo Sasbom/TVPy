@@ -80,8 +80,8 @@ fi
 
 export BUNDLE_LIB
 
-export CC=/opt/gcc15/bin/gcc
-export CXX=/opt/gcc15/bin/g++
+# export CC=/opt/gcc15/bin/gcc
+# export CXX=/opt/gcc15/bin/g++
 
 # Run CMake
 cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -G Ninja
