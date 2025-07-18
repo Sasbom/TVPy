@@ -26,10 +26,10 @@ BUNDLE=false
 
 # Loop through all arguments
 for arg in "$@"; do
-    if ["$arg" = "--bundle"]; then
+    if [ "$arg" = "--bundle" ]; then
         BUNDLE=true
     fi
-    if ["$arg" = "-b"]; then
+    if [ "$arg" = "-b" ]; then
         BUNDLE=true
     fi
 done
@@ -73,13 +73,16 @@ export FOUND_PYBIND11_PATH
 export FOUND_PYBIND11_CMAKE_PATH
 
 BUNDLE_LIB="False"
-if ["$BUNDLE"= true]; then
+if [ "$BUNDLE" = true ]; then
   echo "Bundling libstdc++..."
   BUNDLE_LIB="True"
 fi
 
 export BUNDLE_LIB
 
+export CC=/opt/gcc15/bin/gcc
+export CXX=/opt/gcc15/bin/g++
+
 # Run CMake
-cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -G Ninja
 cmake --build ./build
